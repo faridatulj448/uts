@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, FlatList, ProgressBarAndroid, Platform, ProgressViewIOS, Pressable } from 'react-native';
+import { View, Text, StyleSheet, FlatList, ProgressBarAndroid, Platform, ProgressViewIOS, Pressable, Alert } from 'react-native';
 
 export default function ProgressScreen() {
   const initialProgressData = [
@@ -19,6 +19,18 @@ export default function ProgressScreen() {
       progress: 0,
     }));
     setProgressData(resetData);
+  };
+
+  const confirmResetProgress = () => {
+    Alert.alert(
+      'Konfirmasi Reset',
+      'Apakah Anda yakin ingin mereset semua progress?',
+      [
+        { text: 'Batal', style: 'cancel' },
+        { text: 'Ya', onPress: resetProgress },
+      ],
+      { cancelable: true }
+    );
   };
 
   const renderProgressBar = (progress) => {
@@ -68,7 +80,7 @@ export default function ProgressScreen() {
       <Text style={styles.title}>Kemajuan Latihan</Text>
 
       {/* Tombol Reset */}
-      <Pressable style={styles.resetButton} onPress={resetProgress}>
+      <Pressable style={styles.resetButton} onPress={confirmResetProgress}>
         <Text style={styles.resetButtonText}>Reset Progress</Text>
       </Pressable>
 
